@@ -1,0 +1,105 @@
+# curl -H "Content-type: application/x-www-form-urlencoded" -H "Authorization: Basic Y2xpZW50OnNlY3JldA==" -d "grant_type=password&username=admin&password=admin" http://localhost:8080/app/rest/v2/oauth/token
+
+####################################################################################################
+##
+## CUBA Platform Generic REST API
+##
+####################################################################################################
+
+
+## Execute 'get-token.http' first to get have a valid access token for the API
+
+## GET http://localhost:8080/petclinic/rest/v2/entities/petclinic_Visit
+## Get all Visit entities
+
+POST {{baseUrl}}/rest/v2/oauth/token
+Authorization: Basic {{cubaRestClientId}} {{cubaRestClientSecret}}
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=password&username={{username}}&password={{password}}
+
+
+> {%
+
+    client.test("Response Code is 200", function() {
+      client.assert(response.status === 200, "Response status is not 200");
+    });
+
+    client.test("Authentication Token can be retrieved", function() {
+      client.assert(response.body.access_token, "Auth Token is not available in Response");
+    });
+
+    client.global.set("auth_token", response.body.access_token);
+
+  %}
+
+###
+
+# Creating a pending Visit
+
+POST {{baseUrl}}/{{customApi}}/visits
+Authorization: Bearer {{auth_token}}
+Accept: application/json
+Content-Type: application/json
+
+{
+  "petIdentificationNumber": "{{pikachuIdentificationNumber}}",
+  "visitStart": "2020-04-05T08:00:00",
+  "visitEnd": "2020-04-05T10:00:00",
+  "type": "REGULAR_CHECKUP",
+  "description": "This is a regular checkup for Pikachu"
+}
+
+
+> {%
+
+    client.test("Response Code is 200", function() {
+      client.assert(response.status === 200, "Response status is not 200");
+    });
+
+    client.test("Visit was created", function() {
+      client.assert(response.body.id, "Visit was not created; ID missing");
+    });
+
+    client.global.set("visitId", response.body.id);
+  %}
+
+###
+
+# Start a Treatment for an upcoming Visit
+
+POST {{baseUrl}}/{{customApi}}/treatments/{{visitId}}
+Authorization: Bearer {{auth_token}}
+Accept: application/json
+Content-Type: application/json
+
+
+> {%
+
+    client.test("Response Code is 204", function() {
+      client.assert(response.status === 204, "Response status is not 204");
+    });
+
+  %}
+
+###
+
+# Finish a Treatment for running Visit
+
+PATCH {{baseUrl}}/{{customApi}}/treatments/{{visitId}}
+Authorization: Bearer {{auth_token}}
+Accept: application/json
+Content-Type: application/json
+
+{
+  "outcome": "DONE"
+}
+
+> {%
+
+    client.test("Response Code is 204", function() {
+      client.assert(response.status === 204, "Response status is not 204");
+    });
+
+  %}
+

@@ -1,0 +1,55 @@
+# curl -H "Content-type: application/x-www-form-urlencoded" -H "Authorization: Basic Y2xpZW50OnNlY3JldA==" -d "grant_type=password&username=admin&password=admin" http://localhost:8080/app/rest/v2/oauth/token
+
+####################################################################################################
+##
+## CUBA Platform Generic REST API
+##
+####################################################################################################
+
+
+## Execute 'get-token.http' first to get have a valid access token for the API
+
+## GET http://localhost:8080/petclinic/rest/v2/entities/petclinic_Visit
+## Get all Visit entities
+
+POST {{baseUrl}}/rest/v2/oauth/token
+Authorization: Basic {{cubaRestClientId}} {{cubaRestClientSecret}}
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=password&username={{username}}&password={{password}}
+
+
+> {%
+
+    client.test("Response Code is 200", function() {
+      client.assert(response.status === 200, "Response status is not 200");
+    });
+
+    client.test("Authentication Token can be retrieved", function() {
+      client.assert(response.body.access_token, "Auth Token is not available in Response");
+    });
+
+    client.global.set("auth_token", response.body.access_token);
+  %}
+
+###
+
+
+GET {{baseUrl}}/{{customApi}}/pets/{{pikachuIdentificationNumber}}
+Authorization: Bearer {{auth_token}}
+Accept: application/json
+
+
+> {%
+
+    client.test("Response Code is 200", function() {
+      client.assert(response.status === 200, "Response status is not 200");
+    });
+
+    client.test("Pet is available", function() {
+      client.assert(response.body.identificationNumber === "025", "Pet is not available");
+      client.assert(response.body.name === "Pikachu", "Pikachus Name is missing");
+      client.assert(response.body.owner.contains("Ash"), "Pikachus Owner is not Ash");
+    });
+
+  %}

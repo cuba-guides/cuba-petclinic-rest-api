@@ -10,4 +10,17 @@
   <context:component-scan base-package="com.haulmont.sample.petclinic"/>
 
   <gui:screens base-packages="com.haulmont.sample.petclinic.web"/>
+  <bean id="petclinic_proxyCreator"
+    class="com.haulmont.cuba.web.sys.remoting.WebRemoteProxyBeanCreator">
+    <property name="serverSelector" ref="cuba_ServerSelector"/>
+    <property name="remoteServices">
+      <map>
+        <entry key="petclinic_TreatmentService"
+          value="com.haulmont.sample.petclinic.service.TreatmentService"/>
+        <entry key="petclinic_VisitService"
+          value="com.haulmont.sample.petclinic.service.VisitService"/>
+        <entry key="petclinic_PetService" value="com.haulmont.sample.petclinic.service.PetService"/>
+      </map>
+    </property>
+  </bean>
 </beans>

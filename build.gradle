@@ -30,8 +30,9 @@ cuba {
 }
 
 dependencies {
-  appComponent("com.haulmont.cuba:cuba-global:$cubaVersion")
-  appComponent('com.haulmont.addon.helium:helium-global:0.2.0')
+    appComponent("com.haulmont.cuba:cuba-global:$cubaVersion")
+    appComponent('com.haulmont.addon.restapi:restapi-global:7.2.1')
+    appComponent('com.haulmont.addon.helium:helium-global:0.3.1')
 }
 
 def hsql = 'org.hsqldb:hsqldb:2.4.1'
@@ -141,6 +142,10 @@ configure(webModule) {
   dependencies {
     compileOnly(servletApi)
     compile(globalModule)
+
+    // activate Java 8 Time API serialization via Jackson
+    compile('com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.10.1')
+
 
     testCompile('de.diedavids.sneferu:sneferu:0.3.1')
   }

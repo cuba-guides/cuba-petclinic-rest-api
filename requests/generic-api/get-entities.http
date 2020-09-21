@@ -1,0 +1,22 @@
+# curl -H "Content-type: application/x-www-form-urlencoded" -H "Authorization: Basic Y2xpZW50OnNlY3JldA==" -d "grant_type=password&username=admin&password=admin" http://localhost:8080/app/rest/v2/oauth/token
+
+####################################################################################################
+##
+## CUBA Platform Generic REST API
+##
+####################################################################################################
+
+
+## Execute 'get-token.http' first to get have a valid access token for the API
+
+## Get all Visit entities
+
+GET {{baseUrl}}/{{genericApi}}/entities/petclinic_Visit
+Authorization: Bearer {{auth_token}}
+
+###
+
+## Get all Pet entities
+
+GET {{baseUrl}}/{{genericApi}}/entities/petclinic_Pet
+Authorization: Bearer {{auth_token}}

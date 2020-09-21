@@ -1,0 +1,12 @@
+# curl -H "Content-type: application/x-www-form-urlencoded" -H "Authorization: Basic Y2xpZW50OnNlY3JldA==" -d "grant_type=password&username=admin&password=admin" http://localhost:8080/petclinic/rest/v2/oauth/token
+
+POST {{baseUrl}}/rest/v2/oauth/token
+Authorization: Basic {{cubaRestClientId}} {{cubaRestClientSecret}}
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=password&username={{username}}&password={{password}}
+
+
+> {%
+    client.global.set("auth_token", response.body.access_token);
+  %}

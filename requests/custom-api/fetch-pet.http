@@ -46,10 +46,21 @@ Accept: application/json
       client.assert(response.status === 200, "Response status is not 200");
     });
 
-    client.test("Pet is available", function() {
-      client.assert(response.body.identificationNumber === "025", "Pet is not available");
-      client.assert(response.body.name === "Pikachu", "Pikachus Name is missing");
-      client.assert(response.body.owner.contains("Ash"), "Pikachus Owner is not Ash");
+    client.test("Pet Response contains correct information of Pikachu", function() {
+      client.assert(
+          response.body.identificationNumber === "025",
+          "Pikachu is not available"
+      );
+
+      client.assert(
+          response.body.name === "Pikachu",
+          "Pikachus Name is missing"
+      );
+
+      client.assert(
+          response.body.owner.contains("Ash"),
+          "Pikachus Owner is not Ash"
+      );
     });
 
   %}

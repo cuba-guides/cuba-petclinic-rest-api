@@ -22,11 +22,17 @@ grant_type=password&username={{username}}&password={{password}}
 > {%
 
     client.test("Response Code is 200", function() {
-      client.assert(response.status === 200, "Response status is not 200 - OK");
+      client.assert(
+          response.status === 200,
+          "Response status is not 200 - OK"
+      );
     });
 
     client.test("Authentication Token can be retrieved", function() {
-      client.assert(response.body.access_token, "Auth Token is not available in Response");
+      client.assert(
+          response.body.access_token,
+          "Auth Token is not available in Response"
+      );
     });
 
     client.global.set("auth_token", response.body.access_token);
@@ -54,11 +60,17 @@ Content-Type: application/json
 > {%
 
     client.test("Response Code is 200", function() {
-      client.assert(response.status === 200, "Response status is not 200 - OK");
+      client.assert(
+          response.status === 200,
+          "Response status is not 200 - OK"
+      );
     });
 
     client.test("Visit was created", function() {
-      client.assert(response.body.id, "Visit was not created; ID missing");
+      client.assert(
+          response.body.id,
+          "Visit was not created; ID missing"
+      );
     });
 
     client.global.set("visitId", response.body.id);
@@ -78,10 +90,23 @@ Content-Type: application/json
 > {%
 
     client.test("Response Code is 200", function() {
-      client.assert(response.status === 200, "Response status is not 204 - no content");
+      client.assert(
+          response.status === 200,
+          "Response status is not 200 - OK"
+      );
+    });
 
-      client.assert(response.body.description === "This is a regular checkup for Pikachu", "Description does not match originally send description")
-      client.assert(response.body.type === "REGULAR_CHECKUP", "type does not match originally send type")
+    client.test("Response contains correct Visit information", function() {
+
+      client.assert(
+          response.body.description === "This is a regular checkup for Pikachu",
+          "Description does not match originally send description"
+      )
+
+      client.assert(
+          response.body.type === "REGULAR_CHECKUP",
+          "type does not match originally send type"
+      )
     });
 
   %}
@@ -99,7 +124,10 @@ Content-Type: application/json
 > {%
 
     client.test("Response Code is 204", function() {
-      client.assert(response.status === 204, "Response status is not 204 - no content");
+      client.assert(
+          response.status === 204,
+          "Response status is not 204 - no content"
+      );
     });
 
   %}
@@ -120,7 +148,10 @@ Content-Type: application/json
 > {%
 
     client.test("Response Code is 204", function() {
-      client.assert(response.status === 204, "Response status is not 204 - no content");
+      client.assert(
+          response.status === 204,
+          "Response status is not 204 - no content"
+      );
     });
 
   %}

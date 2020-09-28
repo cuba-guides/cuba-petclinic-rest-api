@@ -3,6 +3,7 @@ package com.haulmont.sample.petclinic.web.controller.visit;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.haulmont.sample.petclinic.entity.visit.Visit;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 public class FetchVisitApiResponse {
 
@@ -30,15 +31,17 @@ public class FetchVisitApiResponse {
         this.description = description;
     }
 
-    public static FetchVisitApiResponse of(Visit visit) {
-
-        return new FetchVisitApiResponse(
-            visit.getId().toString(),
-            visit.getPet().getIdentificationNumber(),
-            visit.getVisitStart(), visit.getVisitEnd(),
-            ApiVisitType.ofEntityType(visit.getType())
-                .orElse(null),
-            visit.getDescription()
+    public static Optional<FetchVisitApiResponse> of(Optional<Visit> possibleVisit) {
+        return possibleVisit.map(visit ->
+            new FetchVisitApiResponse(
+                visit.getId().toString(),
+                visit.getPet().getIdentificationNumber(),
+                visit.getVisitStart(),
+                visit.getVisitEnd(),
+                ApiVisitType.ofEntityType(visit.getType())
+                    .orElse(null),
+                visit.getDescription()
+            )
         );
     }
 

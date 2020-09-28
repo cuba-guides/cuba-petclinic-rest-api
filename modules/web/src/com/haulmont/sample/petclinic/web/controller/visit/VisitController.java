@@ -2,6 +2,7 @@ package com.haulmont.sample.petclinic.web.controller.visit;
 
 import com.haulmont.sample.petclinic.entity.visit.Visit;
 import com.haulmont.sample.petclinic.service.VisitService;
+import java.util.Optional;
 import java.util.UUID;
 import javax.inject.Inject;
 import javax.validation.Valid;
@@ -41,9 +42,11 @@ public class VisitController {
         @PathVariable("visitId") UUID visitId
     ) {
 
-        final Visit visit = visitService.fetch(visitId);
+        final Optional<Visit> visit = Optional.ofNullable(
+            visitService.fetch(visitId)
+        );
 
-        return ResponseEntity.ok(
+        return ResponseEntity.of(
             FetchVisitApiResponse.of(visit)
         );
     }

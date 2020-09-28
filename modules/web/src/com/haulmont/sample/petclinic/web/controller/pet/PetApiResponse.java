@@ -1,4 +1,4 @@
-package com.haulmont.sample.petclinic.web.controller.model;
+package com.haulmont.sample.petclinic.web.controller.pet;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.haulmont.sample.petclinic.entity.pet.Pet;

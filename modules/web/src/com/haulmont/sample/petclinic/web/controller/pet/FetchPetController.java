@@ -1,9 +1,7 @@
-package com.haulmont.sample.petclinic.web.controller;
+package com.haulmont.sample.petclinic.web.controller.pet;
 
-import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.sample.petclinic.entity.pet.Pet;
 import com.haulmont.sample.petclinic.service.PetService;
-import com.haulmont.sample.petclinic.web.controller.model.PetApiResponse;
 import java.util.Optional;
 import javax.inject.Inject;
 import org.springframework.http.ResponseEntity;

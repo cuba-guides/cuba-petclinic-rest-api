@@ -22,7 +22,7 @@ grant_type=password&username={{username}}&password={{password}}
 > {%
 
     client.test("Response Code is 200", function() {
-      client.assert(response.status === 200, "Response status is not 200");
+      client.assert(response.status === 200, "Response status is not 200 - OK");
     });
 
     client.test("Authentication Token can be retrieved", function() {
@@ -54,7 +54,7 @@ Content-Type: application/json
 > {%
 
     client.test("Response Code is 200", function() {
-      client.assert(response.status === 200, "Response status is not 200");
+      client.assert(response.status === 200, "Response status is not 200 - OK");
     });
 
     client.test("Visit was created", function() {
@@ -62,6 +62,28 @@ Content-Type: application/json
     });
 
     client.global.set("visitId", response.body.id);
+  %}
+
+###
+
+
+# Fetch Information about a Visit
+
+GET {{baseUrl}}/{{customApi}}/visits/{{visitId}}
+Authorization: Bearer {{auth_token}}
+Accept: application/json
+Content-Type: application/json
+
+
+> {%
+
+    client.test("Response Code is 200", function() {
+      client.assert(response.status === 200, "Response status is not 204 - no content");
+
+      client.assert(response.body.description === "This is a regular checkup for Pikachu", "Description does not match originally send description")
+      client.assert(response.body.type === "REGULAR_CHECKUP", "type does not match originally send type")
+    });
+
   %}
 
 ###
@@ -77,7 +99,7 @@ Content-Type: application/json
 > {%
 
     client.test("Response Code is 204", function() {
-      client.assert(response.status === 204, "Response status is not 204");
+      client.assert(response.status === 204, "Response status is not 204 - no content");
     });
 
   %}
@@ -98,7 +120,7 @@ Content-Type: application/json
 > {%
 
     client.test("Response Code is 204", function() {
-      client.assert(response.status === 204, "Response status is not 204");
+      client.assert(response.status === 204, "Response status is not 204 - no content");
     });
 
   %}

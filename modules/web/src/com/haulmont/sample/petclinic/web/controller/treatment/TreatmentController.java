@@ -1,7 +1,6 @@
-package com.haulmont.sample.petclinic.web.controller;
+package com.haulmont.sample.petclinic.web.controller.treatment;
 
 import com.haulmont.sample.petclinic.service.TreatmentService;
-import com.haulmont.sample.petclinic.web.controller.model.FinishTreatmentApiRequest;
 import java.util.UUID;
 import javax.inject.Inject;
 import javax.validation.Valid;
@@ -27,7 +26,7 @@ public class TreatmentController {
         @PathVariable("visitId") UUID visitId
     ) {
         treatmentService.start(visitId);
-        return ResponseEntity.noContent().build();
+        return noContent();
     }
 
     @PatchMapping("/treatments/{visitId}")
@@ -43,6 +42,10 @@ public class TreatmentController {
             treatmentService.finish(visitId);
         }
 
+        return noContent();
+    }
+
+    private ResponseEntity<Void> noContent() {
         return ResponseEntity.noContent().build();
     }
 }

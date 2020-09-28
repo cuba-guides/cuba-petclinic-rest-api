@@ -1,6 +1,7 @@
-package com.haulmont.sample.petclinic.web.controller.model;
+package com.haulmont.sample.petclinic.web.controller.visit;
 
 import com.haulmont.sample.petclinic.entity.visit.VisitType;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 public enum ApiVisitType {
@@ -18,5 +19,11 @@ public enum ApiVisitType {
 
     public VisitType toEntityType() {
         return entityType;
+    }
+
+    public static Optional<ApiVisitType> ofEntityType(VisitType entityType) {
+        return Stream.of(ApiVisitType.values())
+            .filter(apiVisitType -> apiVisitType.toEntityType().equals(entityType))
+            .findAny();
     }
 }

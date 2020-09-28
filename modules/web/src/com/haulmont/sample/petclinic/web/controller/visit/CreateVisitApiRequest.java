@@ -1,4 +1,4 @@
-package com.haulmont.sample.petclinic.web.controller.model;
+package com.haulmont.sample.petclinic.web.controller.visit;
 
 import com.haulmont.sample.petclinic.entity.visit.VisitType;
 import com.haulmont.sample.petclinic.service.VisitCreation;

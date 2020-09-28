@@ -1,4 +1,4 @@
-package com.haulmont.sample.petclinic.web.controller.model;
+package com.haulmont.sample.petclinic.web.controller.treatment;
 
 import javax.validation.constraints.NotNull;
 

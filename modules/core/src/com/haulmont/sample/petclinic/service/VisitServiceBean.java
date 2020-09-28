@@ -7,6 +7,7 @@ import com.haulmont.sample.petclinic.entity.pet.Pet;
 import com.haulmont.sample.petclinic.entity.visit.Visit;
 import com.haulmont.sample.petclinic.entity.visit.VisitTreatmentStatus;
 import java.util.Optional;
+import java.util.UUID;
 import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +34,16 @@ public class VisitServiceBean implements VisitService {
 
         return dataManager.commit(visit);
 
+    }
+
+    @Override
+    public Visit fetch(UUID visitId) {
+        final Optional<Visit> possibleVisit = dataManager.load(Visit.class)
+            .id(visitId)
+            .optional();
+
+        return possibleVisit
+            .orElseThrow(() -> new VisitNotFoundException(visitId.toString()));
     }
 
 

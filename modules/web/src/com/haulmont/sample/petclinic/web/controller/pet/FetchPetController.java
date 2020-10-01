@@ -20,7 +20,7 @@ public class FetchPetController {
     protected PetService petService;
 
     @GetMapping("/{petId}")
-    public ResponseEntity<PetApiResponse> fetchPet(
+    public ResponseEntity<Pet> fetchPet(
         @PathVariable("petId") String petId
     ) {
 
@@ -28,8 +28,12 @@ public class FetchPetController {
             petService.findById(petId)
         );
 
-        return ResponseEntity.of(
-            PetApiResponse.of(possiblePet)
+        if (!possiblePet.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(
+            possiblePet.get()
         );
     }
 }

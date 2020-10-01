@@ -20,6 +20,8 @@
         <entry key="petclinic_VisitService"
           value="com.haulmont.sample.petclinic.service.VisitService"/>
         <entry key="petclinic_PetService" value="com.haulmont.sample.petclinic.service.PetService"/>
+        <entry key="petclinic_RegistrationService"
+          value="com.haulmont.sample.petclinic.service.RegistrationService"/>
       </map>
     </property>
   </bean>

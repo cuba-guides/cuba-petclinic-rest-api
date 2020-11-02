@@ -20,7 +20,7 @@ public class FetchPetController {
     protected PetService petService;
 
     @GetMapping("/{petId}")
-    public ResponseEntity<Pet> fetchPet(
+    public ResponseEntity<PetApiResponse> fetchPet(
         @PathVariable("petId") String petId
     ) {
 
@@ -33,7 +33,7 @@ public class FetchPetController {
         }
 
         return ResponseEntity.ok(
-            possiblePet.get()
+            PetApiResponse.of(possiblePet)
         );
     }
 }

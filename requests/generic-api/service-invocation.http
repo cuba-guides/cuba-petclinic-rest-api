@@ -1,0 +1,30 @@
+####################################################################################################
+##
+## CUBA Platform Generic REST API
+##
+####################################################################################################
+
+
+## Execute 'authenticate.http' first to get have a valid access token for the API
+
+## Find Visit by ID via exposed Service
+
+GET {{baseUrl}}/{{genericApi}}/services/petclinic_PetService/findById?petIdentificationNumber=025
+Authorization: Bearer {{auth_token}}
+
+> {%
+
+    client.test("Response Code is 200", function() {
+      client.assert(
+          response.status === 200,
+          "Response status is not 200 - OK"
+      );
+    });
+
+    client.test("Pet List can be retrieved", function() {
+      client.assert(
+          response.body["name"] === "Pikachu",
+          "name Attribute of a Pet is not returned"
+      );
+    });
+  %}

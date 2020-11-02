@@ -1,0 +1,95 @@
+# curl -H "Content-type: application/x-www-form-urlencoded" -H "Authorization: Basic Y2xpZW50OnNlY3JldA==" -d "grant_type=password&username=admin&password=admin" http://localhost:8080/app/rest/v2/oauth/token
+
+####################################################################################################
+##
+## CUBA Platform Generic REST API
+##
+####################################################################################################
+
+
+## Execute 'authenticate.http' first to get have a valid access token for the API
+
+
+## Create a Visit for a Pet
+
+POST {{baseUrl}}/{{genericApi}}/entities/petclinic_Visit
+Authorization: Bearer {{auth_token}}
+
+{
+    "visitStart": "2020-10-14 08:30:00.000",
+    "visitEnd": "2020-10-15 10:00:00.000",
+    "description": "Surgery created via API",
+    "type": "RECHARGE",
+    "pet": {
+      "id": "d83cc7f7-69b5-3830-ff1d-ed74d1e4a79c"
+    }
+}
+
+> {%
+
+    client.test("Response Code is 201", function() {
+      client.assert(
+          response.status === 201,
+          "Response status is not 201 - Created"
+      );
+    });
+
+    client.test("Visit was created", function() {
+      client.assert(
+          response.body.id,
+          "Visit was not created; ID missing"
+      );
+    });
+
+    client.global.set("visitId", response.body.id);
+  %}
+
+
+###
+
+## Fetch Visit Information by ID
+
+GET {{baseUrl}}/{{genericApi}}/entities/petclinic_Visit/{{visitId}}
+Authorization: Bearer {{auth_token}}
+
+
+###
+
+## Start a Visit treatment
+
+PUT {{baseUrl}}/{{genericApi}}/entities/petclinic_Visit/{{visitId}}
+Authorization: Bearer {{auth_token}}
+
+{
+    "treatmentStatus": "IN_PROGRESS"
+}
+
+> {%
+    client.test("Response Code is 200", function() {
+      client.assert(
+          response.status === 200,
+          "Response status is not 200 - OK"
+      );
+    });
+  %}
+
+
+###
+
+## Finish a Visit treatment
+
+PUT {{baseUrl}}/{{genericApi}}/entities/petclinic_Visit/{{visitId}}
+Authorization: Bearer {{auth_token}}
+
+{
+    "treatmentStatus": "DONE"
+}
+
+> {%
+    client.test("Response Code is 200", function() {
+      client.assert(
+          response.status === 200,
+          "Response status is not 200 - OK"
+      );
+    });
+  %}

@@ -29,14 +29,15 @@ public class PetApiResponse {
         this.owner = owner;
     }
 
-    public static Optional<PetApiResponse> of(Optional<Pet> possiblePet) {
+    public static PetApiResponse of(Optional<Pet> possiblePet) {
         return possiblePet.map(pet -> new PetApiResponse(
             pet.getIdentificationNumber(),
             pet.getName(),
             pet.getType().getName(),
             pet.getBirthDate(),
             pet.getOwner().getName())
-        );
+        )
+            .orElse(null);
     }
 
     public String getIdentificationNumber() {

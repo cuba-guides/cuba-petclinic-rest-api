@@ -20,9 +20,14 @@ public class FetchVisitApiResponse {
     private final String description;
 
 
-    private FetchVisitApiResponse(String id, String petIdentificationNumber,
-        LocalDateTime visitStart, LocalDateTime visitEnd,
-        ApiVisitType type, String description) {
+    private FetchVisitApiResponse(
+        String id,
+        String petIdentificationNumber,
+        LocalDateTime visitStart,
+        LocalDateTime visitEnd,
+        ApiVisitType type,
+        String description
+    ) {
         this.id = id;
         this.petIdentificationNumber = petIdentificationNumber;
         this.visitStart = visitStart;
